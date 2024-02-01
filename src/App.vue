@@ -277,23 +277,7 @@ onMounted(() => {
             />
           </g>
         </svg>
-        <select
-          class="secondary-button cursor-pointer text-center"
-          id="locale-select"
-          v-model="$i18n.locale"
-          :aria-label="t('Change language')"
-        >
-          <option v-for="(locale, index) in sortedLocales" :key="index" :value="locale">
-            {{ t(locale) }}
-          </option>
-        </select>
       </div>
-      <div class="vertical-border"></div>
-      <a
-        class="icon-button"
-        href="https://github.com/lyqht/styled-qr-code-generator"
-        :aria-label="t('GitHub repository for this project')"
-      >
         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
           <path
             fill="#abcbca"
