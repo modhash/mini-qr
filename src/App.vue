@@ -464,14 +464,14 @@ onMounted(() => {
             <label for="data">
               {{ t('Data to encode') }}
             </label>
-            <textarea
+            <textarea>
               name="data"
               class="text-input"
               id="data"
               rows="2"
               :placeholder="t('data to encode e.g. a URL or a string')"
               v-model="data"
-            />
+            </textarea>
           </div>
           </div>
         </div>
