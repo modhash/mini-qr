@@ -277,6 +277,11 @@ onMounted(() => {
             />
           </g>
         </svg>
+        <select>
+          <option v-for="(locale, index) in sortedLocales" :key="index" :value="locale">
+            {{ t(locale) }}
+          </option>
+        </select>
       </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
           <path
