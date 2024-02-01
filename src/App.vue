@@ -464,7 +464,7 @@ onMounted(() => {
             <label for="data">
               {{ t('Data to encode') }}
             </label>
-            <textarea>
+            <textarea
               name="data"
               class="text-input"
               id="data"
