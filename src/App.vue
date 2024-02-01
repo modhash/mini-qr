@@ -471,7 +471,7 @@ onMounted(() => {
               rows="2"
               :placeholder="t('data to encode e.g. a URL or a string')"
               v-model="data"
-            </textarea>
+            />
           </div>
           </div>
         </div>
