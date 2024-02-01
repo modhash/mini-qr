@@ -432,6 +432,32 @@ onMounted(() => {
                     </g>
                   </svg>
                 </button>
+                <button
+                  id="download-qr-image-button-svg"
+                  class="button"
+                  @click="downloadQRImageAsSvg"
+                  :aria-label="t('Download QR Code as SVG')"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    >
+                      <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                      <path
+                        d="M5 12V5a2 2 0 0 1 2-2h7l5 5v4M4 20.25c0 .414.336.75.75.75H6a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1h1.25a.75.75 0 0 1 .75.75m3-.75l2 6l2-6m6 0h-1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1v-3"
+                      />
+                    </g>
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -458,6 +484,23 @@ onMounted(() => {
                   {{ preset.name }}
                 </option>
               </select>
+              <button
+                class="icon-button"
+                @click="randomizeStyleSettings"
+                :aria-label="t('Randomize style')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="32"
+                  viewBox="0 0 640 512"
+                >
+                  <path
+                    fill="#888888"
+                    d="M274.9 34.3c-28.1-28.1-73.7-28.1-101.8 0L34.3 173.1c-28.1 28.1-28.1 73.7 0 101.8l138.8 138.8c28.1 28.1 73.7 28.1 101.8 0l138.8-138.8c28.1-28.1 28.1-73.7 0-101.8L274.9 34.3zM200 224a24 24 0 1 1 48 0a24 24 0 1 1-48 0zM96 200a24 24 0 1 1 0 48a24 24 0 1 1 0-48zm128 176a24 24 0 1 1 0-48a24 24 0 1 1 0 48zm128-176a24 24 0 1 1 0 48a24 24 0 1 1 0-48zm-128-80a24 24 0 1 1 0-48a24 24 0 1 1 0 48zm96 328c0 35.3 28.7 64 64 64h192c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64H461.7c11.6 36 3.1 77-25.4 105.5L320 413.8V448zm160-120a24 24 0 1 1 0 48a24 24 0 1 1 0-48z"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
           <div class="w-full">
@@ -473,6 +516,181 @@ onMounted(() => {
               v-model="data"
             />
           </div>
+          <div class="w-full">
+            <div class="mb-2 flex flex-row items-center gap-2">
+              <label for="image-url">
+                {{ t('Logo image URL') }}
+              </label>
+              <button class="icon-button flex flex-row items-center" @click="uploadImage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                  >
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                    <path
+                      d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2zm-5-10v6"
+                    />
+                    <path d="M9.5 13.5L12 11l2.5 2.5" />
+                  </g>
+                </svg>
+                <p>{{ t('Upload image') }}</p>
+              </button>
+            </div>
+            <textarea
+              name="image-url"
+              class="text-input"
+              id="image-url"
+              rows="1"
+              :placeholder="t('Logo image URL')"
+              v-model="image"
+            />
+          </div>
+          <div id="color-settings" class="flex w-full flex-row flex-wrap gap-4">
+            <div class="flex flex-row items-center gap-2">
+              <label for="background-color">{{ t('Background color') }}</label>
+              <input
+                id="background-color"
+                type="color"
+                class="color-input"
+                v-model="styleBackground"
+              />
+            </div>
+            <div class="flex flex-row items-center gap-2">
+              <label for="dots-color">{{ t('Dots color') }}</label>
+              <input id="dots-color" type="color" class="color-input" v-model="dotsOptionsColor" />
+            </div>
+            <div class="flex flex-row items-center gap-2">
+              <label for="corners-square-color">{{ t('Corners Square color') }}</label>
+              <input
+                id="corners-square-color"
+                type="color"
+                class="color-input"
+                v-model="cornersSquareOptionsColor"
+              />
+            </div>
+            <div class="flex flex-row items-center gap-2">
+              <label for="corners-dot-color">{{ t('Corners Dot color') }}</label>
+              <input
+                id="corners-dot-color"
+                type="color"
+                class="color-input"
+                v-model="cornersDotOptionsColor"
+              />
+            </div>
+          </div>
+          <div class="w-full">
+            <label for="width">
+              {{ t('Width (px)') }}
+            </label>
+            <input
+              class="text-input"
+              id="width"
+              type="number"
+              placeholder="width in pixels"
+              v-model="width"
+            />
+          </div>
+          <div class="w-full">
+            <label for="height">
+              {{ t('Height (px)') }}
+            </label>
+            <input
+              class="text-input"
+              id="height"
+              type="number"
+              placeholder="height in pixels"
+              v-model="height"
+            />
+          </div>
+          <div class="w-full">
+            <label for="margin">
+              {{ t('Margin (px)') }}
+            </label>
+            <input class="text-input" id="margin" type="number" placeholder="0" v-model="margin" />
+          </div>
+          <div class="w-full">
+            <label for="image-margin">
+              {{ t('Image margin (px)') }}
+            </label>
+            <input
+              class="text-input"
+              id="image-margin"
+              type="number"
+              placeholder="0"
+              v-model="imageMargin"
+            />
+          </div>
+          <div class="w-full">
+            <label for="border-radius">
+              {{ t('Border radius (px)') }}
+            </label>
+            <input
+              class="text-input"
+              id="border-radius"
+              type="number"
+              placeholder="24"
+              v-model="styleBorderRadius"
+            />
+          </div>
+          <div
+            id="dots-squares-settings"
+            class="mb-4 flex w-full flex-col flex-wrap gap-6 md:flex-row"
+          >
+            <fieldset class="flex-1" role="radiogroup" tabindex="0">
+              <legend>{{ t('Dots type') }}</legend>
+              <div
+                class="radiogroup"
+                v-for="type in [
+                  'dots',
+                  'rounded',
+                  'classy',
+                  'classy-rounded',
+                  'square',
+                  'extra-rounded'
+                ]"
+                :key="type"
+              >
+                <input
+                  :id="'dotsOptionsType-' + type"
+                  type="radio"
+                  v-model="dotsOptionsType"
+                  :value="type"
+                />
+                <label :for="'dotsOptionsType-' + type">{{ t(type) }}</label>
+              </div>
+            </fieldset>
+            <fieldset class="flex-1" role="radiogroup" tabindex="0">
+              <legend>{{ t('Corners Square type') }}</legend>
+              <div
+                class="radiogroup"
+                v-for="type in ['dot', 'square', 'extra-rounded']"
+                :key="type"
+              >
+                <input
+                  :id="'cornersSquareOptionsType-' + type"
+                  type="radio"
+                  v-model="cornersSquareOptionsType"
+                  :value="type"
+                />
+                <label :for="'cornersSquareOptionsType-' + type">{{ t(type) }}</label>
+              </div>
+            </fieldset>
+            <fieldset class="flex-1" role="radiogroup" tabindex="0">
+              <legend>{{ t('Corners Dot type') }}</legend>
+              <div class="radiogroup" v-for="type in ['dot', 'square']" :key="type">
+                <input
+                  :id="'cornersDotOptionsType-' + type"
+                  type="radio"
+                  v-model="cornersDotOptionsType"
+                  :value="type"
+                />
+                <label :for="'cornersDotOptionsType-' + type">{{ t(type) }}</label>
+              </div>
+            </fieldset>
           </div>
         </div>
       </div>
