@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mini-qr",
+  "compatibility_date": "2026-02-24",
+
+  // Serve the built Vite app
+  "assets": {
+    "directory": "./dist"
+  }
+}
